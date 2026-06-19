@@ -10,7 +10,7 @@ import {
 import { logger } from '../../utils/logger.js';
 import AppError from '../../utils/appError.js';
 
-const sendMessage = catchAsync(async (req: Request, res: Response) => {
+export const sendMessage = catchAsync(async (req: Request, res: Response) => {
   const validatedData = chatValidationSchema.parse(req.body);
   const { message, model, stream, options, sessionId } = validatedData;
 
@@ -63,7 +63,7 @@ const sendMessage = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
-const getModels = catchAsync(async (_req: Request, res: Response) => {
+export const getModels = catchAsync(async (_req: Request, res: Response) => {
   const result = await QwenService.getModels();
   
   sendResponse(res, {
@@ -74,7 +74,7 @@ const getModels = catchAsync(async (_req: Request, res: Response) => {
   });
 });
 
-const getModelInfo = catchAsync(async (req: Request, res: Response) => {
+export const getModelInfo = catchAsync(async (req: Request, res: Response) => {
   const { model } = modelValidationSchema.parse({ model: req.params.model });
   const result = await QwenService.getModelInfo(model);
   
@@ -86,7 +86,7 @@ const getModelInfo = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const sendChatHistory = catchAsync(async (req: Request, res: Response) => {
+export const sendChatHistory = catchAsync(async (req: Request, res: Response) => {
   const validatedData = chatHistoryValidationSchema.parse(req.body);
   const { messages, model, stream } = validatedData;
 
@@ -187,6 +187,7 @@ const sendChatHistory = catchAsync(async (req: Request, res: Response) => {
   }
 });
 
+// Export all controller functions as an object
 export const QwenController = {
   sendMessage,
   getModels,
